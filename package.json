@@ -1,0 +1,24 @@
+{
+  "name": "data-collection-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/griff-m001/Data-Collection-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/griff-m001/Data-Collection-Project/issues"
+  },
+  "homepage": "https://github.com/griff-m001/Data-Collection-Project#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "materialize-css": "^1.0.0"
+  }
+}
