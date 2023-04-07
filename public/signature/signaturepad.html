@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Signature Pad implemented by Nijas</title>
+    <meta name="description" content="Signature Pad -created by Nijas" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+    />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link rel="stylesheet" href="signature-pad.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+
+    <!--[if IE]>
+      <link rel="stylesheet" type="text/css" href="css/ie9.css" />
+    <![endif]-->
+  </head>
+  <body onselectstart="return false">
+    <div id="signature-pad" class="signature-pad">
+      <div class="signature-pad--body">
+        <canvas id="canvas-signature-pad"></canvas>
+      </div>
+      <div class="signature-pad--footer">
+        <div class="description"><b>Sign above</b></div>
+
+        <div class="signature-pad--actions">
+          <div>
+            <button type="button" class="btn btn-default" data-action="clear">
+              Clear
+            </button>
+            <button type="button" class="btn btn-default" data-action="undo">
+              Undo
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="button save"
+              data-action="save-svg"
+              hidden="true"
+            ></button>
+            <button
+              type="button"
+              class="button save"
+              data-action="save-png"
+              hidden="true"
+            ></button>
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary"
+            style="background-color: blue"
+            onclick="saveImage()"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="signature_pad.js"></script>
+    <script src="app.js"></script>
+    <script>
+      function saveImage() {
+        const canvas = document.getElementById("canvas-signature-pad");
+        const dataURL = canvas.toDataURL();
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/save-image", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            console.log("Image saved successfully");
+          }
+        };
+        xhr.send(JSON.stringify({ imageData: dataURL }));
+      }
+    </script>
+  </body>
+</html>

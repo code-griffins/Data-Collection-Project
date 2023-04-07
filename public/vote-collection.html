@@ -9,9 +9,9 @@
     <!-- Materialize CSS -->
     <link
       rel="stylesheet"
-      href="../node_modules/materialize-css/dist/css/materialize.min.css"
+      href="./materialize-css/dist/css/materialize.min.css"
     />
-    <script src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    <script src="./materialize-css/dist/js/materialize.min.js"></script>
     <!-- Initialize Dropdowns -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -61,6 +61,16 @@
       .collection{
         background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)) !important;
       }
+      .canvas {
+        display: block;
+        position: relative;
+        border: 1px solid;    
+      }
+      .img {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
     </style>
   </head>
   <body>
@@ -109,20 +119,9 @@
               <h4 class="card-title">Make your choice!</h4>
               <small class="small label chip">fanya uamuzi wako</i></small>
               <div class="container input-field">
-                <p style="padding: 15px">
-                  <label>
-                    <input type="checkbox" name="upvote" class="filled-in" />
-                    <span>UPVOTE (kubali)</span>
-                  </label>
-                </p>
-                <p style="padding: 15px">
-                  <label>
-                    <input type="checkbox" name="downvote" class="filled-in" />
-                    <span>DOWNVOTE (kataa)</span>
-                  </label>
-                </p>
-                <div class="center" style="padding: 15px">
-                  <input type="submit" class="btn btn-success" />
+                <!-- <div class="signature-pad-container"> -->
+                    <iframe src="./signature/signaturepad.html" style="margin-left: -30px; border: none; padding: -40px;" width="125%" height="300"></iframe>
+                <!-- </div>                   -->
                 </div>
               </div>
             </form>
