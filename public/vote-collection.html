@@ -9,9 +9,9 @@
     <!-- Materialize CSS -->
     <link
       rel="stylesheet"
-      href="../node_modules/materialize-css/dist/css/materialize.min.css"
+      href="./materialize-css/dist/css/materialize.min.css"
     />
-    <script src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    <script src="./materialize-css/dist/js/materialize.min.js"></script>
     <!-- Initialize Dropdowns -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -24,28 +24,52 @@
         M.AutoInit();
       });
     </script>
-    <!-- .background-image {
-        background: url("mother.jpg") no-repeat center center fixed;
+    <style>
+      body{
+        max-height: 50%;
+      }
+   
+      .background-image {
+        background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url("mother.jpg") no-repeat center center fixed;
         background-size: cover;
         position: relative;
         height: 700px; /* set a height to the background element so it is visible */
       }
-
       .content {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        /* set opacity for the overlay */
         z-index: 1;
-        /* set z-index to make sure the content overlay on top of the background */
+        opacity: 0.9;
       }
- -->
-    <style>
       .card-main {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+        opacity: 1;
+      }
+      .collection-item:before {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: grey;
+        margin-right: 10px;
+      }
+      .collection{
+        background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)) !important;
+      }
+      .canvas {
+        display: block;
+        position: relative;
+        border: 1px solid;    
+      }
+      .img {
+        position: absolute;
+        left: 0;
+        top: 0;
       }
     </style>
   </head>
@@ -53,46 +77,59 @@
     <div class="background-image">
       <div class="content">
         <!-- Your content here -->
-        <h6 class="flow-text">
-          County Governments lack adequate resources and enough revenue to
-          support hospitals. Let's reduce congetion in hospitals by voting to .
-          For more info, click the link below
-        </h6>
-        <a href="moreinfo.html" target="_blank">More Info</a>
-        <!-- <div class="container-fluid"> -->
+         <ul class="collection">
+          <li class="collection-item">
+            Save our hospitals 
+            <small class="small">(Okoa hospitali zote)</small>
+          </li>
+          <li class="collection-item">
+            Prevent another strike within hospitals.
+            <small class="small">(Zuia kugoma hospitalini)</small>
+          </li>
+          <li class="collection-item">
+            Prevent a shortage of medicine in clinics.
+            <small class="small">(Zuia upungufu wa dawa)</small>
+          </li>
+          <li class="collection-item">
+            <a href="moreinfo.html" target="_blank">Read more ...</a>
+          </li>
+        </ul>
+
         <div class="card card-main">
           <div class="card-content">
             <form action="">
-              <h1 class="card-title">Cast your Vote</h1>
               <hr />
-              <div class="grey lighten-4">
-                <h6 class="flow-text"><b>Kenyan ID No:</b></h6>
-                <p class="small thin"><i>(nambari ya usajili)</i></p>
-                <input
-                  type="number"
-                  required
-                  placeholder="I.D no. e.g 345..."
-                  max="8"
-                />
-                <input type="button" value="VERIFY" class="btn btn-warning" />
+              <div
+                class="grey lighten-4"
+                style="display: flex; flex-direction: row; padding: 5px"
+              >
+                <div>
+                  <p class="flow-text label"><b>ID No:</b></p>
+                  <small class="small label"><i>(nambari ya usajili)</i></small>
+                </div>
+                <input type="number" required placeholder="345XXXXX" max="8" />
               </div>
-              <h4>MAKE YOUR CHOICE</h4>
-              <h6>(fanya uamuzi wako)</h6>
-              <h4>UPVOTE</h4>
-              <input type="checkbox" name="voterchoice" value="upvote" />
-              <h4>DOWNVOTE</h4>
-              <input
-                type="checkbox"
-                name="voterchoice"
-                value="downvote"
-              /><br />
-              <input type="submit" class="btn btn-success" />
+              <div class="container center" style="padding: 5px">
+                <input
+                  type="button"
+                  value="VERIFY"
+                  class="btn btn-warning center"
+                />
+              </div>
+              <h4 class="card-title">Make your choice!</h4>
+              <small class="small label chip">fanya uamuzi wako</i></small>
+              <div class="container input-field">
+                <!-- <div class="signature-pad-container"> -->
+                    <iframe src="./signature/signaturepad.html" style="margin-left: -30px; border: none; padding: -40px;" width="125%" height="300"></iframe>
+                <!-- </div>                   -->
+                </div>
+              </div>
             </form>
           </div>
         </div>
-        <!-- </div> -->
       </div>
     </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
