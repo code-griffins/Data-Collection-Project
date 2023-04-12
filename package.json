@@ -1,25 +1,17 @@
 {
-  "name": "data-collection-project",
+  "name": "siganture-pad-using-html-master",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/griff-m001/Data-Collection-Project.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/griff-m001/Data-Collection-Project/issues"
-  },
-  "homepage": "https://github.com/griff-m001/Data-Collection-Project#readme",
   "dependencies": {
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
-    "materialize-css": "^1.0.0"
-  },
-  "description": ""
+    "sqlite3": "^5.1.6"
+  }
 }
