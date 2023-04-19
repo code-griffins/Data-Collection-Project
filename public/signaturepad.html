@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Signature Pad implemented by Nijas</title>
+    <title>Vote Collection</title>
     <meta name="description" content="Signature Pad -created by Nijas" />
 
     <meta
@@ -26,23 +26,20 @@
     <script src="./materialize-css/dist/js/materialize.min.js"></script>
   </head>
   <body onselectstart="return false">
-    <div class="row">
-      <div class="input-field col s12 m6">
-        <!-- <i class="material-icons prefix">credit_card</i> -->
-        <input
-          id="idNo"
-          type="number"
-          class="validate"
-          placeholder="245XXXXX"
-          required
-          autofocus
-        />
-        <label for="idNo">ID No</label>
-        <span class="helper-text">(Nambari ya Usajili)</span>
-      </div>
+    <form action="/save-image" method="POST" target="signatureIframe">
+    <div class="input-field col s12 m6">
+      <!-- <i class="material-icons prefix">credit_card</i> -->
+      <input
+        id="idNo"
+        type="number"
+        class="validate"
+        placeholder="245XXXXX"
+        required
+        autofocus
+      />
+      <label for="idNo">ID No</label>
+      <span class="helper-text">(Nambari ya Usajili)</span>
     </div>
-
-    <br />
     <div id="signature-pad" class="signature-pad">
       <div class="signature-pad--body">
         <canvas id="canvas-signature-pad"></canvas>
@@ -84,24 +81,36 @@
         </div>
       </div>
     </div>
+    <!-- </form> -->
     <script src="signature_pad.js"></script>
     <script src="app.js"></script>
     <script>
+      let redirect = true;
+      
       function saveImage() {
         const canvas = document.getElementById("canvas-signature-pad");
         const dataURL = canvas.toDataURL();
-
         // Get ID no
         const idNo = document.querySelector("#idNo").value;
+
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "/save-image", true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function () {
           if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             console.log("Image saved successfully");
+            redirect = false;
+            console.log(redirect)
           }
         };
-        xhr.send(JSON.stringify({ imageData: dataURL, idNo: idNo }));
+        xhr.send(
+          JSON.stringify({
+            imageData: dataURL,
+            idNo: idNo,
+          })
+        );
+        // Redirect to more info?
+        (redirect == true) ? window.parent.location.href="/already-signed?ipAddressFound" : window.parent.location.href="/already-signed"
       }
     </script>
   </body>

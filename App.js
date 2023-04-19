@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 const sqlite3 = require("sqlite3");
-
+let ipAddress
 // Database to store records.
 const db = new sqlite3.Database("./signatures.db");
 db.run("CREATE TABLE IF NOT EXISTS signaturesTable (id INTEGER PRIMARY KEY AUTOINCREMENT, idNo TEXT, imageURL TEXT)")
@@ -11,11 +11,17 @@ db.run("CREATE TABLE IF NOT EXISTS signaturesTable (id INTEGER PRIMARY KEY AUTOI
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use(express.static("public"))
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/vote-collection.html")
+    fetch('https://api.ipify.org/?format=json')
+        .then(response => response.json())
+        .then(data => {
+            ipAddress = data.ip;
+            res.sendFile(__dirname + "/public/vote-collection.html");
+
+        })
+        .catch(error => console.error(error));
 })
 
 app.get("/more-info", (req, res) => {
@@ -42,20 +48,47 @@ app.post('/save-image', (req, res) => {
             console.error(err);
             res.status(500).json({ error: 'Failed to save image' });
         } else {
-            res.status(200).json({ success: true });
 
-            // ID number will be required to verify
-            // Save image URL and ID number 
-            db.serialize(() => {
-                db.run("INSERT INTO signaturesTable(idNo,imageURL) VALUES(?,?)", [idNo, filePath])
-            })
+            let newRecord = false;
+            db.all('SELECT ipAddress FROM signaturesTable', [], (err, rows) => {
+                if (err) {
+                    console.error(err.message);
+                } else {
+                    for (let i = 0; i < rows.length; i++) {
+                        const row = rows[i];
+                        if (row.ipAddress == ipAddress) {
+                            newRecord = true;
+                        }
+                    }
+                    if (!newRecord) {
+                        res.status(200).json({ success: true, name: "Tony" });
+
+                        db.run("INSERT INTO signaturesTable(ipAddress, idNo, imageURL) VALUES (?, ?, ?)", [ipAddress, idNo, filePath]);
+                    }
+                }
+            });
+
+
+
+
+            // Close the database connection
+            db.close((err) => {
+                if (err) {
+                    console.error(err.message);
+                }
+                console.log('Database connection closed.');
+            });
+            // })
 
             // Reload page
-
         }
     });
 });
 
+// Define a route for already signed
+app.get('/already-signed', (req, res) => {
+    res.sendFile(__dirname + "/public/already-signed.html");
+})
 // Start the server
 const port = 3000;
 app.listen(port, () => {
